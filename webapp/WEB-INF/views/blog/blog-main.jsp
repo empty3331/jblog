@@ -20,10 +20,10 @@
 		<div id="content" class="clearfix">
 			<div id="profilecate_area">
 				<div id="profile">
-					<c:if test="${blogVo.logoFile == 'default'}">
+					<c:if test="${blogVo.logoFile eq null}">
 						<img id="proImg" src="${pageContext.request.contextPath}/assets/images/spring-logo.jpg">
 					</c:if>
-					<c:if test="${blogVo.logoFile != 'default'}">
+					<c:if test="${blogVo.logoFile != null}">
 						<img id="proImg" src="${pageContext.request.contextPath}/upload/${blogVo.logoFile}">
 					</c:if>
 					<div id="nick">${blogVo.userName}(${blogVo.id})님</div>

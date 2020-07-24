@@ -4,19 +4,22 @@ public class BlogVo {
 	
 	private String id;
 	private String blogTitle;
-	private String logofile;
+	private String logoFile;
 	private String userName;
 	
 	//
 	public BlogVo() {}
-	public BlogVo(String id, String blogTitle, String logofile,String userName) {
+	public BlogVo(String id, String blogTitle, String logoFile, String userName) {
+		super();
 		this.id = id;
 		this.blogTitle = blogTitle;
-		this.logofile = logofile;
+		this.logoFile = logoFile;
 		this.userName = userName;
 	}
-	
+
+
 	//
+	
 	public String getId() {
 		return id;
 	}
@@ -29,11 +32,11 @@ public class BlogVo {
 	public void setBlogTitle(String blogTitle) {
 		this.blogTitle = blogTitle;
 	}
-	public String getLogofile() {
-		return logofile;
+	public String getLogoFile() {
+		return logoFile;
 	}
-	public void setLogofile(String logofile) {
-		this.logofile = logofile;
+	public void setLogoFile(String logoFile) {
+		this.logoFile = logoFile;
 	}
 	public String getUserName() {
 		return userName;
@@ -43,12 +46,12 @@ public class BlogVo {
 	}
 	
 	//
-	
 	@Override
 	public String toString() {
-		return "BlogVo [id=" + id + ", blogTitle=" + blogTitle + ", logofile=" + logofile + ", userName=" + userName
+		return "BlogVo [id=" + id + ", blogTitle=" + blogTitle + ", logoFile=" + logoFile + ", userName=" + userName
 				+ "]";
 	}
+
 	
 	
 

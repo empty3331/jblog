@@ -15,7 +15,7 @@
 	<insert id="insertblog" parameterType="com.javaex.vo.BlogVo">
 	<![CDATA[
 	INSERT INTO blog
-	VALUES (#{id},#{userName}||'의 블로그 입니다.','경로')
+	VALUES (#{id},#{userName}||'의 블로그 입니다.','')
 	]]>
 	</insert>
 	
