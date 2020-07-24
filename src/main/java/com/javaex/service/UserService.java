@@ -27,5 +27,27 @@ public class UserService {
 		return 1;
 		
 	}
+	
+	// 아이디체크
+	public boolean checkId(String id) {
+		System.out.println("ser:checkId");
+		UserVo uVo = usDao.checkId(id);
+
+		boolean result = true;
+
+		if (uVo == null) {
+			result = true;
+		} else {
+			result = false;
+		}
+		return result;
+	}
+
+	
+	//로그인
+		public UserVo login(UserVo userVo) {
+			System.out.println("ser:login");
+			return usDao.selectUser(userVo);
+		}
 
 }

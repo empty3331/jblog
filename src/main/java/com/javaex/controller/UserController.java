@@ -1,9 +1,13 @@
 package com.javaex.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.javaex.service.UserService;
 import com.javaex.vo.BlogVo;
@@ -36,6 +40,19 @@ public class UserController {
 		return "user/joinSuccess";
 	}
 	
+	//아이디 중복확인(ajax)
+	@ResponseBody
+	@RequestMapping("/idcheck")
+	public boolean idcheck(@RequestParam("userId") String id) {
+		System.out.println("cont:loginForm"); 
+		
+		boolean result = usService.checkId(id);
+		
+		return result;
+	}
+	
+	///////////////////////////////////////////////////////
+	
 	//로그인 폼
 	@RequestMapping("/loginForm")
 	public String loginForm() {
@@ -44,5 +61,30 @@ public class UserController {
 		return "user/loginForm";
 	}
 
+	//로그인
+	@RequestMapping("/login")
+	public String login(@ModelAttribute UserVo userVo,HttpSession session) {
+		System.out.println("cont:login");
+		
+		UserVo authUser = usService.login(userVo);
+		if(authUser != null) {
+			session.setAttribute("authUser", authUser);
+			System.out.println("성공");
+			return "redirect:/";
+		} else {
+			System.out.println("실패");
+			return "redirect:/user/loginForm?result=fail";
+		}
+	}
+	
+	//로그아웃
+	@RequestMapping("/logout")
+	public String logout(HttpSession session) {
+		System.out.println("cont:logout");
+		session.removeAttribute("authUser");
+		session.invalidate();
+		
+		return "redirect:/";
+	}
 	
 }

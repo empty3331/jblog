@@ -11,7 +11,7 @@
 	]]>
 	</insert>
 	
-	<!--블로그생성 -->
+	<!--회원가입시 블로그생성 -->
 	<insert id="insertblog" parameterType="com.javaex.vo.BlogVo">
 	<![CDATA[
 	INSERT INTO blog
@@ -19,12 +19,34 @@
 	]]>
 	</insert>
 	
-	<!--카테고리생성 -->
+	<!--회원가입시 카테고리생성 -->
 	<insert id="insertcate" parameterType="com.javaex.vo.CategoryVo">
 	<![CDATA[
 	INSERT INTO category
 	VALUES (seq_category_no.nextval,#{id},'미분류','기본으로 만들어지는 카테고리 입니다.',sysdate)
 	]]>
 	</insert>
+	
+	<!--아이디 중복체크 -->
+	<select id="selectId" parameterType="String"
+	resultType="com.javaex.vo.UserVo">
+	<![CDATA[
+	SELECT userno as "userNo",id
+	FROM users
+	WHERE id = #{id}
+	
+	]]>
+	</select>
+	
+	<!--로그인 -->
+	<select id="selectUser" parameterType="com.javaex.vo.UserVo"
+		resultType="com.javaex.vo.UserVo">
+	<![CDATA[
+	SELECT userno as "userNO",id,username as "userName",password,joindate as "joinDate"
+	FROM users
+	WHERE id= #{id}
+	AND password= #{password}
+	]]>
+	</select>
 	
 </mapper>

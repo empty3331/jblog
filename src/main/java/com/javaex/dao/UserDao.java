@@ -33,6 +33,23 @@ public class UserDao {
 		System.out.println(cateVo.toString());
 		return sqlSession.insert("user.insertcate",cateVo);
 	}
+
+	
+	//중복아이디 체크
+	public UserVo checkId(String id) {
+		System.out.println("dao:idCheck");
+		
+		UserVo uVo = sqlSession.selectOne("user.selectId", id);
+		
+		return uVo;
+	}
+
+
+	//로그인
+	public UserVo selectUser(UserVo userVo) {
+		System.out.println("dao:selectUser");
+		return sqlSession.selectOne("user.selectUser", userVo);
+	}
 	
 	
 	

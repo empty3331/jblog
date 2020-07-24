@@ -6,6 +6,9 @@
 <head>
 <meta charset="UTF-8">
 <title>JBlog</title>
+
+<script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/jquery/jquery-1.12.4.js"></script>
+
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/jblog.css">
 
 </head>
@@ -31,7 +34,7 @@
 		      		</tr>
 		      		<tr>
 		      			<td></td>
-		      			<td id="tdMsg" colspan="2">사용할 수 있는 아이디 입니다.</td>
+		      			<td id="tdMsg" colspan="2"></td>
 		      		</tr> 
 		      		<tr>
 		      			<td><label for="txtPassword">패스워드</label> </td>
@@ -46,7 +49,7 @@
 		      		<tr>
 		      			<td><span>약관동의</span> </td>
 		      			<td colspan="3">
-		      				<input id="chkAgree" type="checkbox" name="agree" value="y">
+		      				<input id="chkAgree" type="checkbox" name="agree" value="">
 		      				<label for="chkAgree">서비스 약관에 동의합니다.</label>
 		      			</td>   
 		      		</tr>   		
@@ -66,5 +69,47 @@
 
 </body>
 
+<script type="text/javascript">
+
+//작성여부 팝업창
+$("#btnIdCheck").on("click",function(){
+	console.log("클릭");
+	
+	//입력된 아이디정보 추출
+	var id = $("#txtId").val();
+	console.log(id);
+	
+	var userId = {userId:id}
+	
+	//정보 보내기
+	$.ajax({
+		
+		url : "${pageContext.request.contextPath }/user/idcheck",		
+		type : "post",
+		//contentType : "application/json",
+		data : userId,
+
+		dataType : "json",
+		success : function(result){
+			console.log(result);
+			/*성공시 처리해야될 코드 작성*/
+			if(result == true){
+				$("#tdMsg").text("사용할 수 있는 아이디 입니다.");
+				
+			} else{
+				$("#tdMsg").text("다른 아이디로 가입해 주세요.");
+			}
+			
+		},
+		error : function(XHR, status, error) {
+			console.error(status + " : " + error);
+		}
+	});
+	
+	
+});
+
+
+</script>
 
 </html>
