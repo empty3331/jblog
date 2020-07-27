@@ -40,7 +40,7 @@
                     GROUP by c.cateno) caca
 	where cate.cateno = caca.cateno
 	and cate.id = #{id}
-	ORDER by cate.cateno DESC
+	ORDER by cate.cateno asc
 	]]>
 	</select>
 	
@@ -73,6 +73,12 @@
 		]]>
 	</select>
 	
-	
+	<!-- 카테고리 삭제 -->
+	<delete id="deleteCate" parameterType="int">
+		<![CDATA[
+			DELETE FROM category
+			WHERE cateNo = #{cateNo}
+		]]>
+	</delete>
 	
 </mapper>

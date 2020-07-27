@@ -27,33 +27,46 @@
 			<!-- //admin-menu -->
 			
 			<div id="admin-content">
-			<table id="admin-cate-list">
-				<colgroup>
-					<col style="width: 50px;">
-					<col style="width: 200px;">
-					<col style="width: 100px;">
-					<col style="width: 500px;">
-					<col style="width: 50px;">
-				</colgroup>
-				<thead>
-					<tr>
-						<th>번호</th>
-						<th>카테고리명</th>
-						<th>포스트 수</th>
-						<th>설명</th>
-						<th>삭제</th>
-					</tr>
-				
-				</thead>
-				<!-- 원래 테이블 있던자리 -->
-				<tbody id='cateList'></tbody>
-				<!-- 원래 테이블 있던자리 -->
+				<table id="admin-cate-list">
+					<colgroup>
+						<col style="width: 50px;">
+						<col style="width: 200px;">
+						<col style="width: 100px;">
+						<col style="width: 500px;">
+						<col style="width: 50px;">
+					</colgroup>
+					<thead>
+						<tr>
+							<th>번호</th>
+							<th>카테고리명</th>
+							<th>포스트 수</th>
+							<th>설명</th>
+							<th>삭제</th>
+						</tr>
+
+					</thead>
+					<!-- 원래 테이블 있던자리 -->
+					<tbody id='cateList'>
+						<c:forEach items="${cateVo}" var="cateVo">
+							<tr id="category-${caVo.cateNo}">
+								<td>caVo.cateNo</td>
+								<td>caVo.cateName</td>
+								<td>caVo.cateCount</td>
+								<td>caVo.description</td>
+								<td class='text-center'><img class='btnCateDel'
+								    data-post="${caVo.countPost}" data-cateNo="${caVo.cateno}"
+									src="${pageContext.request.contextPath}/assets/images/delete.jpg">
+								</td>
+							</tr>
+						</c:forEach>
+					</tbody>
+					<!-- 원래 테이블 있던자리 -->
 				</table>
-				
-				
-				
-      		
-		      	<table id="admin-cate-add" >
+
+
+
+
+				<table id="admin-cate-add" >
 		      		<colgroup>
 						<col style="width: 100px;">
 						<col style="">
@@ -89,8 +102,36 @@
 
 <script type="text/javascript">
 
-//삭제
-
+//카테고리 삭제
+$("#cateList").on("click", ".btnCateDel", function(){
+	var cateNo = $(this).data("cateno");
+	var countPost = $(this).data("post");
+	
+	
+	if(countPost != 0){
+		alert("삭제할 수 없습니다.");
+		
+		return false;
+	}
+	
+	$.ajax({
+		//보낼 때 옵션
+		url : "${pageContext.request.contextPath}/${blogVo.id}/admin/delCategory",
+		type : "post",
+		data : {cateNo: cateNo},
+		//받을 때 옵션
+		dataType : "json",
+		success : function() {
+			console.log("#category-"+cateNo);
+			$("#category-"+cateNo).remove();
+			
+		},
+		error : function(XHR, status, error) {
+			console.error(status + " : " + error);
+		}
+	});
+	
+});
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -118,7 +159,7 @@ $("#btnAddCate").on("click",function(){
 		//받을 때 
 		dataType : "json",
 		success : function(cateVo) {
-			render(cateVo,"up");
+			render(cateVo);
 			$("[name='name']").val("");
 			$("[name='desc']").val("");
 			
@@ -159,24 +200,21 @@ function fetchList() {
 }
 
 //리스트 그리기(1개씩)
-function render(caVo,direction) {
+function render(caVo) {
 	var str = "";
 	str += "    <tr>";
 	str += "      <td>"+caVo.cateNo+"</td>";
 	str += "      <td>"+caVo.cateName+"</td>";
 	str += "      <td>"+caVo.cateCount+"</td>";
 	str += "      <td>"+caVo.description+"</td>";
-	str += "      <td class='text-center' data-delcate='"+caVo.cateNo+"'>";
-	str += "      <img class='btnCateDel' src='${pageContext.request.contextPath}/assets/images/delete.jpg'>";
+	str += "      <td class='text-center'>";
+	str += "      <img class='btnCateDel' data-post='0' data-cateno='"+caVo.cateNo +"' src='${pageContext.request.contextPath}/assets/images/delete.jpg'>";
 	str += "      </td>";	
 	str += "</tr>";
 	
-	
-	if(direction== "up"){
+
 		$("#cateList").prepend(str);
-	}else if(direction== "down") {
-		$("#cateList").append(str);
-	} else{ console.log("없음");}
+	
 }
 
 ////////////////////////////////////////////////////////////////////////////////

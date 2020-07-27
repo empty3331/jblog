@@ -87,6 +87,18 @@ public class AdminController {
 		return blService.addCate(cateVo);
 	}
 	
+	//카테고리 삭제
+	@ResponseBody
+	@RequestMapping("/delCategory")
+	public int delCategory(@PathVariable String id,int cateNo) {
+		System.out.println("admin:cate delete");
+		System.out.println(cateNo);
+		
+		return blService.delCategory(cateNo);
+	}
+	
+	
+	
 ////////////////////////////////////////////////////////////////////////////////////	
 	//글작성 페이지
 	@RequestMapping("/write")

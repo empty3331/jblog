@@ -114,6 +114,13 @@ public class BlogService {
 		return newCate;
 	}
 
+	
+	//카테고리 삭제
+	public int delCategory(int cateNo) {
+		System.out.println("서비스:카테고리 삭제");
+		return blDao.deleteCate(cateNo);
+	}
+
 
 	
 

@@ -67,6 +67,12 @@ public class BlogDao {
 		return vo;
 	}
 
+	//카테고리 삭제
+	public int deleteCate(int cateNo) {
+		System.out.println("다오:카테 삭제");
+		return sqlSession.delete("blog.deleteCate", cateNo);
+	}
+
 	
 	
 
