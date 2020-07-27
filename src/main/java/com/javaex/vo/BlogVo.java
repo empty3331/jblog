@@ -9,6 +9,17 @@ public class BlogVo {
 	
 	//
 	public BlogVo() {}
+	
+	
+
+	public BlogVo(String id, String blogTitle, String logoFile) {
+		this.id = id;
+		this.blogTitle = blogTitle;
+		this.logoFile = logoFile;
+	}
+
+
+
 	public BlogVo(String id, String blogTitle, String logoFile, String userName) {
 		super();
 		this.id = id;

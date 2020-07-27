@@ -7,18 +7,23 @@ public class CategoryVo {
 	private String cateName;
 	private String description;
 	private String regDate;
+	private int cateCount;
 	
 	//
 	public CategoryVo() {}
-	public CategoryVo( int cateNo,String id, String cateName, String description, String regDate) {
+
+	
+	public CategoryVo(String id, int cateNo, String cateName, String description, String regDate, int cateCount) {
 		super();
 		this.id = id;
 		this.cateNo = cateNo;
 		this.cateName = cateName;
 		this.description = description;
 		this.regDate = regDate;
+		this.cateCount = cateCount;
 	}
-	
+
+
 	//
 	public String getId() {
 		return id;
@@ -51,13 +56,21 @@ public class CategoryVo {
 		this.regDate = regDate;
 	}
 	
-	
-	//
+	public int getCateCount() {
+		return cateCount;
+	}
+	public void setCateCount(int cateCount) {
+		this.cateCount = cateCount;
+	}
+
+
 	@Override
 	public String toString() {
 		return "CategoryVo [id=" + id + ", cateNo=" + cateNo + ", cateName=" + cateName + ", description=" + description
-				+ ", regDate=" + regDate + "]";
+				+ ", regDate=" + regDate + ", cateCount=" + cateCount + "]";
 	}
-	
+
+
+	//
 
 }

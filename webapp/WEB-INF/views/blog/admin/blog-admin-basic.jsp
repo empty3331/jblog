@@ -21,13 +21,14 @@
 		<div id="content">
 			<ul id="admin-menu" class="clearfix">
 				<li class="tabbtn selected"><a href="${pageContext.request.contextPath}/${blogVo.id}/admin/basic">기본설정</a></li>
-				<li class="tabbtn"><a href="${pageContext.request.contextPath}/${blogVo.id}/admin/cate">카테고리</a></li>
+				<li class="tabbtn"><a href="${pageContext.request.contextPath}/${blogVo.id}/admin/category">카테고리</a></li>
 				<li class="tabbtn"><a href="${pageContext.request.contextPath}/${blogVo.id}/admin/write">글작성</a></li>
 			</ul>
 			<!-- //admin-menu -->
 			
 			<div id="admin-content">
-				<form action="${pageContext.request.contextPath }/upload" method="post" >
+				<form action="${pageContext.request.contextPath }/${blogVo.id}/admin/upload" method="post" enctype="multipart/form-data">
+				<input type="hidden" name="id" value="${blogVo.id}"> 
 	 		      	<table id="admin-basic">
 	 		      		<colgroup>
 							<col style="width: 100px;">
@@ -35,16 +36,28 @@
 						</colgroup>
 			      		<tr>
 			      			<td><label for="textTitle">블로그 제목</label></td>
-			      			<td><input id="textTitle" type="text" name="blogTitle" value=""></td>
+			      			<td><input id="textTitle" type="text" name="blogTitle" value="${blogVo.blogTitle }"></td>
 			      		</tr>
 			      		<tr>
 			      			<td><label>로고이미지</label></td>
-			      			<td class="text-left"><img src="${pageContext.request.contextPath}/assets/images/${savename}"></td>   
+			      			
+			      			<td class="text-left">
+			      			<c:if test="${blogVo.logoFile eq null}">
+			      			<img src="${pageContext.request.contextPath}/assets/images/spring-logo.jpg">
+			      			</c:if>
+			      			<c:if test="${blogVo.logoFile != null}">
+			      			<img src="${pageContext.request.contextPath}/upload/${blogVo.logoFile}">
+			      			</c:if>
+			      			
+			      			</td>   
 			      		</tr>      		
 			      		<tr>
 			      			<td>&nbsp;</td>
-			      			<td><input id="textLogo" type="file" name="file"></td>      			
-			      		</tr>           		
+			      			
+			      			
+			      			<td><input id="textLogo" type="file" name="file" value="${saveName.file }"></td>      			
+			      		</tr>      
+			      		    		
 			      	</table>
 			      	<div id="btnArea">
 			      		<button class="btn_l" type="submit" >기본설정변경</button>

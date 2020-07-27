@@ -4,6 +4,7 @@ import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,14 +27,23 @@ public class BlogService {
 		return blDao.blogList(id);
 	}
 
-	public CategoryVo cateList(String id) {
+	//카테고리
+	public List<CategoryVo> cateList(String id) {
 		System.out.println("ser:cateList");
-		return blDao.cateList(id);
+		
+		System.out.println(id);
+		
+		List<CategoryVo> caVo = blDao.cateList(id);
+
+		return caVo;
 	}
 
 	
 	//프로필 파일올리기
-	public String restore(MultipartFile file, String blogTitle) {
+	public String restore(String id,MultipartFile file, String blogTitle) {
+		System.out.println("서비스:프로필갱신");
+		
+		if(file.getOriginalFilename() != "" ) {
 		//////////////파일카피////////
 		String saveDir = "C:\\javaStudy\\upload";
 		
@@ -51,13 +61,9 @@ public class BlogService {
 		System.out.println("파일경로"+filePath);
 				
 
-		//텍스트 확인
-		System.out.println(blogTitle.toString());
+		System.out.println(saveName);
 		
-		
-		blDao.blogTitleUp(blogTitle);
-		blDao.logofileUp(saveName);
-		
+		BlogVo blvo = new BlogVo(id,blogTitle,saveName);
 		///////////////파일서버에 복사////////////////////////////
 		try {
 			byte[] fileData = file.getBytes();
@@ -71,11 +77,30 @@ public class BlogService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-			
-
 		
-		return saveName;
+		//텍스트 확인
+	    System.out.println(blogTitle.toString());
+			
+		
+		blDao.blogTitleUp(blvo);
+		}
+		
+		else {
+			//텍스트 확인
+		    System.out.println(blogTitle.toString());
+		    BlogVo blvo = new BlogVo(id,blogTitle,"");
+		    blDao.blogTitleUp(blvo);
+		}
+		
+		
+		return id;
 	}
+
+	public CategoryVo addCate(CategoryVo cateVo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 	
 

@@ -1,15 +1,20 @@
 package com.javaex.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.javaex.service.BlogService;
 import com.javaex.vo.BlogVo;
+import com.javaex.vo.CategoryVo;
 
 @Controller
 @RequestMapping("/{id}/admin")
@@ -36,30 +41,56 @@ public class AdminController {
 	//제목,이미지 업로드
 	@RequestMapping("/upload")
 	public String upload(@RequestParam("file") MultipartFile file,
-			             @RequestParam("blogTitle") String blogTitle,Model model) {
+			             @RequestParam("blogTitle") String blogTitle,
+			             @RequestParam("id") String id,Model model) {
 		System.out.println("cont:admin proupload");
-		System.out.println(file.getOriginalFilename());
-		System.out.println(blogTitle);
 		
-		 String saveName= blService.restore(file,blogTitle);
+		 String saveName= blService.restore(id,file,blogTitle);
 		 model.addAttribute("saveName", saveName);
+		 
+		 System.out.println(saveName);
 		
-		return"";
+		return"redirect:/{id}";
 	}
 	
+////////////////////////////////////////////////////////////////////////////////////
 	
-	//카테고리 페이지
-	@RequestMapping("/cate")
+	//카테고리  어드민 메인
+	@RequestMapping("/category")
 	public String cate(@PathVariable("id") String id, Model model) {
 		System.out.println("cont:admin cate");
 		BlogVo blogVo = blService.blogList(id);
 		model.addAttribute("blogVo", blogVo);
 		
+		
 		return "blog/admin/blog-admin-cate";
 	}
 	
+	//카테고리 목록보기
+	@ResponseBody
+	@RequestMapping("/list")
+	public List<CategoryVo> list(@PathVariable("id") String id,Model model){
+		System.out.println("admin:cate list");
+		
+		List<CategoryVo> caVo = blService.cateList(id); 
+		
+		
+		System.out.println(caVo.toString());
+		return caVo;
+	}
 	
+	//카테고리 추가하기
+	@ResponseBody
+	@RequestMapping("/catewrite")
+	public CategoryVo catewrite(@RequestBody CategoryVo cateVo) {
+		System.out.println("admin:cate write");
+		
+		CategoryVo vo = blService.addCate(cateVo);
+		System.out.println(vo);
+		return vo;
+	}
 	
+////////////////////////////////////////////////////////////////////////////////////	
 	//글작성 페이지
 	@RequestMapping("/write")
 	public String write(@PathVariable("id") String id, Model model) {

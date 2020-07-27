@@ -20,9 +20,9 @@
 
 		<div id="content">
 			<ul id="admin-menu" class="clearfix">
-				<li class="tabbtn selected"><a href="${pageContext.request.contextPath}/${blogVo.id}/admin/basic">기본설정</a></li>
-				<li class="tabbtn"><a href="${pageContext.request.contextPath}/${blogVo.id}/admin/cate">카테고리</a></li>
-				<li class="tabbtn"><a href="${pageContext.request.contextPath}/${blogVo.id}/admin/write">글작성</a></li>
+				<li class="tabbtn"><a href="${pageContext.request.contextPath}/${blogVo.id}/admin/basic">기본설정</a></li>
+				<li class="tabbtn"><a href="${pageContext.request.contextPath}/${blogVo.id}/admin/category">카테고리</a></li>
+				<li class="tabbtn selected"><a href="${pageContext.request.contextPath}/${blogVo.id}/admin/write">글작성</a></li>
 			</ul>
 			<!-- //admin-menu -->
 			

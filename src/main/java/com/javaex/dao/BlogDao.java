@@ -1,5 +1,7 @@
 package com.javaex.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -13,32 +15,31 @@ public class BlogDao {
 	@Autowired
 	private SqlSession sqlSession;
 
+	
+	//메인화면 블로그 정보 불러오기
 	public BlogVo blogList(String id) {
 		System.out.println("dao:blogList");
 		
 		return sqlSession.selectOne("blog.blogList",id);
 	}
-
-	public CategoryVo cateList(String id) {
+	
+	//메인화면 카테고리 정보 불러오기
+	public List<CategoryVo> cateList(String id) {
 		System.out.println("dao:cateList");
 		
-		return sqlSession.selectOne("blog.cateList", id);
-	}
-
-	
-	//
-	public void blogTitleUp(String blogTitle) {
-		// TODO Auto-generated method stub
+		System.out.println("다오"+id);
 		
-	}
-	
-	
-    //프사 갱신하기
-	public void logofileUp(String saveName) {
-		// TODO Auto-generated method stub
-		
+		return sqlSession.selectList("blog.cateList", id);
 	}
 
 	
+	//블로그 정보 갱신하기
+	public int blogTitleUp(BlogVo blVo) {
+		System.out.println("dao:blogTitle");
+		System.out.println(blVo.toString());
+	
+		return sqlSession.update("blog.update",blVo);
+	}
 
+	
 }
