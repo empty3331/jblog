@@ -96,9 +96,22 @@ public class BlogService {
 		return id;
 	}
 
+	
+	//카테고리 추가
 	public CategoryVo addCate(CategoryVo cateVo) {
-		// TODO Auto-generated method stub
-		return null;
+		System.out.println("서비스:카테고리 추가");
+		
+		int nextSeq = blDao.nextSeq();
+		cateVo.setCateNo(nextSeq);
+		
+		
+		blDao.catePlus(cateVo);
+		
+		
+		
+		CategoryVo newCate = blDao.selectNewCate(nextSeq);
+		
+		return newCate;
 	}
 
 

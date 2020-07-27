@@ -42,4 +42,33 @@ public class BlogDao {
 	}
 
 	
+	public int nextSeq() {
+		int nextSeq = sqlSession.selectOne("blog.selectNextVal");
+		System.out.println(nextSeq);
+		return nextSeq;
+	}
+
+	
+	public void catePlus(CategoryVo cateVo) {
+		System.out.println("다오:카테고리 플러스");
+		
+		System.out.println(cateVo.toString());
+		sqlSession.insert("blog.insertcate",cateVo);
+
+	}
+
+
+	public CategoryVo selectNewCate(int no) {
+		System.out.println("다오:셀렉트 뉴 카테");
+		
+		CategoryVo vo = sqlSession.selectOne("blog.selectNewCate", no);
+		System.out.println(no);
+		
+		return vo;
+	}
+
+	
+	
+
+	
 }

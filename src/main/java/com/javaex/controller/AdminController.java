@@ -5,8 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -82,12 +82,9 @@ public class AdminController {
 	//카테고리 추가하기
 	@ResponseBody
 	@RequestMapping("/catewrite")
-	public CategoryVo catewrite(@RequestBody CategoryVo cateVo) {
+	public CategoryVo catewrite(@PathVariable String id,@ModelAttribute CategoryVo cateVo) {
 		System.out.println("admin:cate write");
-		
-		CategoryVo vo = blService.addCate(cateVo);
-		System.out.println(vo);
-		return vo;
+		return blService.addCate(cateVo);
 	}
 	
 ////////////////////////////////////////////////////////////////////////////////////	

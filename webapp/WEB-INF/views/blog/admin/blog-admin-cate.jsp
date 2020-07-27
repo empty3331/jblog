@@ -89,32 +89,38 @@
 
 <script type="text/javascript">
 
+//삭제
+
+
+
+////////////////////////////////////////////////////////////////////////////////
 //카테고리 추가하기
 $("#btnAddCate").on("click",function(){
 	//이벤트 체크
 	console.log("추가버튼");
 	
 	//데이터 수집
-	var name = $("#inCateName").val();
-	var des = $("#inCateDes").val();
-	var id = $("#inCateId").val();
+	var newCategory ={
+			cateName: $("[name='name']").val(),
+			description: $("[name='desc']").val(),
+		}; 
+	
+	console.log(newCategory);
 
 	
 	//데이터 전송
 	$.ajax({
+		//보낼때
 		url : "${pageContext.request.contextPath }/${blogVo.id}/admin/catewrite",
 		type : "post",
-		data : {cateName:name,
-		       description:des,
-		       id:id},
+		data : newCategory,
 	
-		//받을 때 옵션
+		//받을 때 
 		dataType : "json",
 		success : function(cateVo) {
-			render(guestbookVo,"up");
-			$("#inCateName").val("");
-			$("#inCateDes").val("");
-			$("#inCateId").val("");
+			render(cateVo,"up");
+			$("[name='name']").val("");
+			$("[name='desc']").val("");
 			
 		},
 		error : function(XHR, status, error) {
@@ -122,9 +128,6 @@ $("#btnAddCate").on("click",function(){
 		}
 	});
 });
-
-
-
 
 
 //////////////////////////////////////////////////////////////////////////////////
