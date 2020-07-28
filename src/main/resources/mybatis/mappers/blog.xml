@@ -44,6 +44,18 @@
 	]]>
 	</select>
 	
+	<!--등록한 카테고리 정보 불러오기 -->
+	<select id="selectByNo" parameterType="int" resultType="com.javaex.vo.CategoryVo">
+		<![CDATA[
+			select  c.cateNo,c.id,p.cateCount,c.cateName,c.description,c.regDate
+			from category c left outer join ( select count(*) as cateCount,
+			                                         p.cateNo
+			                                  from post p            
+			                                  group by p.cateNo) p
+			on c.cateNo = p.cateNo
+			where c.cateNo = #{cateNo}
+       	]]>
+	</select>
 	
 	
 	<!--카테고리 추가-->
@@ -54,7 +66,7 @@
 		 ]]>
 	</insert>
 	
-	<!--카테고리 번호-->
+	<!--카테고리 번호 붙이기-->
 	<select id="selectNextVal" parameterType="com.javaex.vo.CategoryVo" resultType="int">
 		<![CDATA[
 			SELECT seq_category_no.nextval FROM dual

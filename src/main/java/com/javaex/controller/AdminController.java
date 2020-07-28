@@ -90,11 +90,12 @@ public class AdminController {
 	//카테고리 삭제
 	@ResponseBody
 	@RequestMapping("/delCategory")
-	public int delCategory(@PathVariable String id,int cateNo) {
+	public int delCategory(@RequestParam("cateNo") int cateNo) {
 		System.out.println("admin:cate delete");
 		System.out.println(cateNo);
 		
-		return blService.delCategory(cateNo);
+		int cnt = blService.delCategory(cateNo);
+		return cnt;
 	}
 	
 	

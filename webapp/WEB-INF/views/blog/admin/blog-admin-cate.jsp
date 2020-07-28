@@ -47,18 +47,7 @@
 					</thead>
 					<!-- 원래 테이블 있던자리 -->
 					<tbody id='cateList'>
-						<c:forEach items="${cateVo}" var="cateVo">
-							<tr id="category-${caVo.cateNo}">
-								<td>caVo.cateNo</td>
-								<td>caVo.cateName</td>
-								<td>caVo.cateCount</td>
-								<td>caVo.description</td>
-								<td class='text-center'><img class='btnCateDel'
-								    data-post="${caVo.countPost}" data-cateNo="${caVo.cateno}"
-									src="${pageContext.request.contextPath}/assets/images/delete.jpg">
-								</td>
-							</tr>
-						</c:forEach>
+					
 					</tbody>
 					<!-- 원래 테이블 있던자리 -->
 				</table>
@@ -103,16 +92,10 @@
 <script type="text/javascript">
 
 //카테고리 삭제
-$("#cateList").on("click", ".btnCateDel", function(){
+$("#cateList").on("click", "img", function(){
 	var cateNo = $(this).data("cateno");
-	var countPost = $(this).data("post");
 	
-	
-	if(countPost != 0){
-		alert("삭제할 수 없습니다.");
-		
-		return false;
-	}
+	console.log(cateNo);
 	
 	$.ajax({
 		//보낼 때 옵션
@@ -121,10 +104,13 @@ $("#cateList").on("click", ".btnCateDel", function(){
 		data : {cateNo: cateNo},
 		//받을 때 옵션
 		dataType : "json",
-		success : function() {
-			console.log("#category-"+cateNo);
-			$("#category-"+cateNo).remove();
-			
+		success : function(count) {
+			console.log("#t"+cateNo);
+			if(count ==1){
+			$("#t"+cateNo).remove();
+			} else{
+				alert("게시글이 있을 경우 삭제할 수 없습니다.");
+			}
 		},
 		error : function(XHR, status, error) {
 			console.error(status + " : " + error);
@@ -190,7 +176,7 @@ function fetchList() {
 		success : function(caVo) {
 			console.log(caVo);
 			for (var i = 0; i < caVo.length; i++) {
-				render(caVo[i],"down");
+				render(caVo[i]);
 			}
 		},
 		error : function(XHR, status, error) {
@@ -199,16 +185,16 @@ function fetchList() {
 	});
 }
 
-//리스트 그리기(1개씩)
+//리스트 그리기
 function render(caVo) {
 	var str = "";
-	str += "    <tr>";
+	str += '    <tr id="t'+caVo.cateNo+'">';
 	str += "      <td>"+caVo.cateNo+"</td>";
 	str += "      <td>"+caVo.cateName+"</td>";
 	str += "      <td>"+caVo.cateCount+"</td>";
 	str += "      <td>"+caVo.description+"</td>";
 	str += "      <td class='text-center'>";
-	str += "      <img class='btnCateDel' data-post='0' data-cateno='"+caVo.cateNo +"' src='${pageContext.request.contextPath}/assets/images/delete.jpg'>";
+	str += "      <img class='btnCateDel' data-cateno='"+caVo.cateNo +"' src='${pageContext.request.contextPath}/assets/images/delete.jpg'>";
 	str += "      </td>";	
 	str += "</tr>";
 	
