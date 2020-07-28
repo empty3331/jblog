@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.javaex.service.BlogService;
 import com.javaex.vo.BlogVo;
 import com.javaex.vo.CategoryVo;
+import com.javaex.vo.PostVo;
 
 @Controller
 @RequestMapping("/{id}/admin")
@@ -23,7 +24,7 @@ public class AdminController {
 	@Autowired
 	private BlogService blService;
 	
-	
+///////////////////////////////////////////////////////////////////////////////////	
 	//베이직페이지
 	@RequestMapping("/basic")
 	public String basic(@PathVariable("id") String id, Model model) {
@@ -59,6 +60,7 @@ public class AdminController {
 	@RequestMapping("/category")
 	public String cate(@PathVariable("id") String id, Model model) {
 		System.out.println("cont:admin cate");
+		//상단 상태창 불러오기 위해
 		BlogVo blogVo = blService.blogList(id);
 		model.addAttribute("blogVo", blogVo);
 		
@@ -102,13 +104,28 @@ public class AdminController {
 	
 ////////////////////////////////////////////////////////////////////////////////////	
 	//글작성 페이지
-	@RequestMapping("/write")
-	public String write(@PathVariable("id") String id, Model model) {
-		System.out.println("cont:admin write");
+	@RequestMapping("/writeForm")
+	public String writeForm(@PathVariable("id") String id, Model model) {
+		System.out.println("cont:admin writeForm");
+		//상단 상태창 불러오기 위해
 		BlogVo blogVo = blService.blogList(id);
 		model.addAttribute("blogVo", blogVo);
+		
+		//글쓸때 선택할 카테고리 정보
+		List<CategoryVo> caVo = blService.cateList(id);
+		model.addAttribute("caVo", caVo);
 		
 		return "blog/admin/blog-admin-write";
 	}
 	
+  //게시물쓰기
+	@RequestMapping("/write")
+	public String wrtite(@PathVariable("id") String id, @ModelAttribute PostVo postVo) {
+		System.out.println("cont:admin write");
+		
+		System.out.println(postVo.toString());
+		
+		return"";
+		//redirect:/{id}/admin/writeForm
+	}
 }
